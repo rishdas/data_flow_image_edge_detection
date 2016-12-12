@@ -1,0 +1,49 @@
+/**
+ * Document: MaxCompiler Training (maxcompiler-training.pdf)
+ * Chapter: 2
+ * Exercise Solution: 1
+ * Summary:
+ * 	 Kernel that performs a 3x3 SobelSolution edge detection on an image.
+ *   The coefficients are declared statically in an array.
+ *   At the border of the image, the output is set to 0.
+ */
+package sobel;
+
+import com.maxeler.maxcompiler.v2.kernelcompiler.Kernel;
+import com.maxeler.maxcompiler.v2.kernelcompiler.KernelParameters;
+import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.CounterChain;
+import com.maxeler.maxcompiler.v2.kernelcompiler.types.base.DFEVar;
+
+class SobelSolutionKernel extends Kernel {
+
+	protected SobelSolutionKernel(KernelParameters parameters) {
+		super(parameters);
+
+		int height = 256, width = 256;
+
+		DFEVar inImage = io.input("inImage", dfeInt(32));
+
+		DFEVar window[][] = new DFEVar[3][3]; // x, y
+
+		for (int x = -1; x <= 1; x++)
+			for (int y = -1; y <= 1; y++)
+				window[x + 1][y + 1] = stream.offset(inImage, y * width + x);
+
+		DFEVar maxdiff = constant.var(0);
+		DFEVar diff = constant.var(0);
+		DFEVar diffABS = constant.var(0);
+
+		for (int x = 0; x < 3; x++) {
+			for (int y = 0; y < 3; y++) {
+				diff = window[x][y] - window[1][1];
+				diffABS =  diff >= 0 ? diff : -diff;
+				maxdiff = diffABS>maxdiff ? diffABS : maxdiff;
+			}
+		}
+
+
+		DFEVar result = maxdiff;
+
+		io.output("outImage", result, result.getType());
+	}
+}

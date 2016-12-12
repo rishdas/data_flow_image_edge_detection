@@ -1,0 +1,13 @@
+*** After kernel graph-pass 'Init Graph' ***
+node "0.0" (ID 13) has unconnected outputs: [value]
+stack trace of node origin follows:
+	com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.Constant.var(Constant.java:86)
+	sobel.SobelSolutionKernel.<init>(SobelSolutionKernel.maxj:33)
+	sobel.SobelSolutionManager.main(SobelSolutionManager.maxj:23)
+	
+node "0.0" (ID 14) has unconnected outputs: [value]
+stack trace of node origin follows:
+	com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.Constant.var(Constant.java:86)
+	sobel.SobelSolutionKernel.<init>(SobelSolutionKernel.maxj:34)
+	sobel.SobelSolutionManager.main(SobelSolutionManager.maxj:23)
+	
